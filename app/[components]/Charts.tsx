@@ -1,27 +1,28 @@
 import Chart from "chart.js/auto";
 import { CategoryScale } from "chart.js";
 import { useState } from "react";
-import { PolarArea } from "react-chartjs-2";
+import { Doughnut, PolarArea } from "react-chartjs-2";
 
 // import "./styles.css";
 import { Data } from "@/utils/Data";
 import PieChart from "./PieCharts";
+import { CardContent } from "@/components/ui/card";
 
 Chart.register(CategoryScale);
 
 export default function Charts() {
   const [chartData, setChartData] = useState({
-    labels: Data.map((data) => data.year),
+    labels: Data.map((data) => data.problemType),
+    total: Data.map((data) => data.total),
     datasets: [
       {
-        label: "Users Gained ",
-        data: Data.map((data) => data.userGain),
+        label: "Solved Total",
+        total: "Total Problems",
+        data: Data.map((data) => data.solved),
         backgroundColor: [
-          "rgb(255, 99, 132)",
-          "rgb(75, 192, 192)",
           "rgb(255, 205, 86)",
-          "rgb(201, 203, 207)",
-          "rgb(54, 162, 235)",
+          "rgb(75, 192, 192)",
+          "rgb(255, 99, 132)",
         ],
 
         borderColor: "black",
@@ -32,13 +33,22 @@ export default function Charts() {
 
   return (
     <div className="App">
-      <PolarArea
-        data={chartData}
-        options={{
-          responsive: true,
-          maintainAspectRatio: false,
-        }}
-      />
+      <CardContent className="flex justify-between items-center">
+        <div>
+          <h1>Problems Solved</h1>
+          <div className="">
+            <Doughnut
+              data={chartData}
+              options={{
+                responsive: true,
+                maintainAspectRatio: false,
+              }}
+              aria-label="Problems Solved"
+            />
+          </div>
+        </div>
+        <div className=""></div>
+      </CardContent>
     </div>
   );
 }

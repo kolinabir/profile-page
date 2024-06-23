@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@canvasjs/charts": "^3.8.11",
+    "@canvasjs/react-charts": "^1.0.2",
     "@nivo/core": "^0.87.0",
     "@nivo/heatmap": "^0.87.0",
     "@radix-ui/react-avatar": "^1.1.0",
