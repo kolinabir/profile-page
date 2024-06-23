@@ -65,8 +65,14 @@ export default function Component() {
         </CardContent>
       </Card>
       <div className="flex-1 space-y-4">
-        <Card>
-          <Charts></Charts>
+        <Card className="">
+          <CardContent
+            className=" flex justify-between  md:flex-none 
+           gap-4"
+          >
+            <Charts></Charts>
+            <Charts></Charts>
+          </CardContent>
         </Card>
         <Card>
           <CardContent>

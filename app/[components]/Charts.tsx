@@ -1,19 +1,25 @@
 import React, { useEffect, useRef } from "react";
 import ApexCharts from "apexcharts";
 
+interface ProblemData {
+  category: string;
+  solved: number;
+  total: number;
+}
+
 const WebsiteTraffic: React.FC = () => {
   const chartRef = useRef<HTMLDivElement>(null);
   const chartInstance = useRef<ApexCharts | null>(null);
 
-  const chartData = [
-    { category: "Easy", value: 35 },
-    { category: "Medium", value: 23 },
-    { category: "Hard", value: 15 },
+  const chartData: ProblemData[] = [
+    { category: "Easy", solved: 35, total: 100 },
+    { category: "Medium", solved: 23, total: 200 },
+    { category: "Hard", solved: 15, total: 150 },
   ];
 
   const getChartOptions = (): ApexCharts.ApexOptions => {
     return {
-      series: chartData.map((item) => item.value),
+      series: chartData.map((item) => item.solved),
       labels: chartData.map((item) => item.category),
       colors: ["#1C64F2", "#16BDCA", "#FDBA8C", "#E74694"],
       chart: {
@@ -31,26 +37,32 @@ const WebsiteTraffic: React.FC = () => {
                 show: true,
                 fontSize: "22px",
                 fontFamily: "Inter, sans-serif",
-                offsetY: 30,
+                offsetY: -10,
               },
               value: {
                 show: true,
                 fontSize: "16px",
                 fontFamily: "Inter, sans-serif",
-                offsetY: -20,
+                offsetY: 16,
                 formatter: function (val) {
-                  return val.toString();
+                  return `${val} / 100`;
                 },
               },
               total: {
                 show: true,
-                label: "Total",
+                label: "Total Solved",
                 fontSize: "16px",
                 fontFamily: "Inter, sans-serif",
-                formatter: function (w) {
-                  return w.globals.seriesTotals
-                    .reduce((a, b) => a + b, 0)
-                    .toString();
+                formatter: function () {
+                  const totalSolved = chartData.reduce(
+                    (sum, item) => sum + item.solved,
+                    0
+                  );
+                  const totalProblems = chartData.reduce(
+                    (sum, item) => sum + item.total,
+                    0
+                  );
+                  return `${totalSolved} / ${totalProblems}`;
                 },
               },
             },
@@ -63,6 +75,18 @@ const WebsiteTraffic: React.FC = () => {
       legend: {
         position: "bottom",
         fontFamily: "Inter, sans-serif",
+        formatter: function (seriesName, opts) {
+          const dataPoint = chartData[opts.seriesIndex];
+          return `${seriesName}: ${dataPoint.solved} / ${dataPoint.total}`;
+        },
+      },
+      tooltip: {
+        y: {
+          formatter: function (value, { seriesIndex }) {
+            const dataPoint = chartData[seriesIndex];
+            return `${value} solved out of ${dataPoint.total} total problems`;
+          },
+        },
       },
       responsive: [
         {
@@ -102,8 +126,8 @@ const WebsiteTraffic: React.FC = () => {
   }, []);
 
   return (
-    <div className="max-w-sm w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
-      <div className="flex justify-between mb-3">
+    <div className=" w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
+      <div className="flex justify-between">
         <div className="flex items-center">
           <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white pe-1">
             Problem Difficulty Distribution
