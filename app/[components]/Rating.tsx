@@ -6,6 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import Image from "next/image";
 
 const Rating = () => {
   return (
@@ -33,12 +34,47 @@ const Rating = () => {
       <Card>
         <CardHeader>
           <CardTitle>Earned Badges</CardTitle>
-          <CardDescription>
-            Badges are earned by solving problems and participating in contests
-          </CardDescription>
         </CardHeader>
-        <CardContent>
-          <p>Card Content</p>
+        <CardContent className="flex justify-between">
+          <div className="text-center text-sm font-semibold ">
+            <Image
+              title="Solved 10 problems"
+              className="mx-auto"
+              src={"https://cdn-icons-png.flaticon.com/128/11851/11851561.png"}
+              alt="badge"
+              width={50}
+              height={50}
+            />
+            <div>
+              <h4>Solution Seeker</h4>
+            </div>
+          </div>
+          <div className="text-center text-sm font-semibold">
+            <Image
+              title="Solved 10 problems"
+              className="mx-auto"
+              src={"https://cdn-icons-png.flaticon.com/128/1147/1147830.png"}
+              alt="badge"
+              width={50}
+              height={50}
+            />
+            <div>
+              <h4>Brainstormer</h4>
+            </div>
+          </div>
+          <div className="text-center text-sm font-semibold">
+            <Image
+              title="Solved 10 problems"
+              className="mx-auto"
+              src={"https://cdn-icons-png.flaticon.com/128/5611/5611117.png"}
+              alt="badge"
+              width={50}
+              height={50}
+            />
+            <div>
+              <h4>Puzzle Master</h4>
+            </div>
+          </div>
         </CardContent>
       </Card>
     </div>
