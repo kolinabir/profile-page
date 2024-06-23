@@ -52,9 +52,10 @@ const GithubStyleHeatmap = () => {
           <TooltipTrigger asChild>
             <div className="relative  ">
               <HeatMap
-                className=""
+                className="text-2xl"
+                rectSize={15}
                 value={value}
-                width="700"
+                width="900"
                 monthLabels={[
                   "Jan",
                   "Feb",
@@ -85,12 +86,6 @@ const GithubStyleHeatmap = () => {
                       event.currentTarget.getAttribute("data-date") || ""
                     ),
                   onMouseLeave: handleCellMouseLeave,
-                  onClick: (event: React.MouseEvent<SVGRectElement>) => {
-                    console.log(
-                      "click",
-                      event.currentTarget.getAttribute("data-date")
-                    );
-                  },
                 }}
                 rectRender={(props, data) => (
                   <rect

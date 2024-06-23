@@ -85,7 +85,7 @@ export default function Component() {
           </CardContent>
         </Card>
         <Card>
-          <CardContent className="w-full">
+          <CardContent className="">
             <HeatmapSubmission></HeatmapSubmission>
             <h3 className="text-lg font-bold">
               25 submissions in the past one year
