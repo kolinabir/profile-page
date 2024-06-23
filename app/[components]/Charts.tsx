@@ -15,6 +15,7 @@ const WebsiteTraffic: React.FC = () => {
     { category: "Easy", solved: 35, total: 100 },
     { category: "Medium", solved: 23, total: 200 },
     { category: "Hard", solved: 15, total: 150 },
+    { category: "Super Hard", solved: 7, total: 50 },
   ];
 
   const getChartOptions = (): ApexCharts.ApexOptions => {
@@ -147,6 +148,11 @@ const WebsiteTraffic: React.FC = () => {
       </div>
 
       <div className="py-6" ref={chartRef}></div>
+      <div className="bg-red-200 ">
+        <div>sadas</div>
+        <div>sadas</div>
+        <div>sadas</div>
+      </div>
     </div>
   );
 };
