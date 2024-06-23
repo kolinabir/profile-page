@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { ResponsiveHeatMap } from "@nivo/heatmap";
 import Charts from "./[components]/Charts";
+import Rating from "./[components]/Rating";
 
 export default function Component() {
   return (
@@ -13,10 +14,13 @@ export default function Component() {
       <Card className="lg:w-1/4">
         <CardContent className="flex flex-col items-center">
           <Avatar className="w-24 h-24 mb-2 mt-2">
-            <AvatarImage src="/placeholder-user.jpg" />
+            <AvatarImage
+              className="object-cover"
+              src="https://t3.ftcdn.net/jpg/02/43/12/34/360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg"
+            />
             <AvatarFallback>U</AvatarFallback>
           </Avatar>
-          <h2 className="text-xl font-bold">knkolin9</h2>
+          <h2 className="text-xl font-bold">@abirkolin</h2>
           <p className="text-gray-500">Rank 2,897,052</p>
           <Button className="mt-4" variant="outline">
             Edit Profile
@@ -52,6 +56,11 @@ export default function Component() {
               <Badge>C++</Badge>
               <span>5 problems solved</span>
             </li>
+
+            <li className="flex justify-between">
+              <Badge>Python</Badge>
+              <span>5 problems solved</span>
+            </li>
           </ul>
           <h3 className="mt-4 text-lg font-bold">Skills</h3>
           <ul className="mt-2 space-y-2">
@@ -67,11 +76,11 @@ export default function Component() {
       <div className="flex-1 space-y-4">
         <Card className="">
           <CardContent
-            className=" flex justify-between  md:flex-none 
-           gap-4"
+            className="bg-red-100 flex justify-between  md:flex-none 
+           gap-4 p-2"
           >
             <Charts></Charts>
-            <Charts></Charts>
+            <Rating></Rating>
           </CardContent>
         </Card>
         <Card>
