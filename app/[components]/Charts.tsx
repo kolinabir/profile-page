@@ -106,22 +106,18 @@ const WebsiteTraffic: React.FC = () => {
   };
 
   useEffect(() => {
-    if (
-      chartRef.current &&
-      typeof ApexCharts !== "undefined" &&
-      !chartInstance.current
-    ) {
+    if (chartRef.current) {
       chartInstance.current = new ApexCharts(
         chartRef.current,
         getChartOptions()
       );
+
       chartInstance.current.render();
     }
 
     return () => {
       if (chartInstance.current) {
         chartInstance.current.destroy();
-        chartInstance.current = null;
       }
     };
   }, []);

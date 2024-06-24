@@ -27,17 +27,10 @@ const GithubStyleHeatmap = () => {
       month: "long",
       day: "numeric",
     });
-    // search for the date in the value array
-    // if found, set the count to the count of that date
-    let count = "0";
-    for (let i = 0; i < value.length; i++) {
-      if (value[i].date === date) {
-        count = value[i].count.toString() || "0";
-        continue;
-      } else {
-        count = "0";
-      }
-    }
+
+    const dateEntry = value.find((entry) => entry.date === date);
+    const count = dateEntry ? dateEntry.count : 0;
+
     setTooltipContent(`${count} contributions on ${formattedDate}`);
   };
 
@@ -46,16 +39,16 @@ const GithubStyleHeatmap = () => {
   };
 
   return (
-    <div className=" mt-3">
+    <div className="mt-3">
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
-            <div className="relative  ">
+            <div className="relative">
               <HeatMap
                 className="text-2xl"
                 rectSize={15}
                 value={value}
-                width="900"
+                width={900}
                 monthLabels={[
                   "Jan",
                   "Feb",
@@ -87,13 +80,19 @@ const GithubStyleHeatmap = () => {
                     ),
                   onMouseLeave: handleCellMouseLeave,
                 }}
-                rectRender={(props, data) => (
-                  <rect
-                    {...props}
-                    data-date={data.date}
-                    fill={data.count ? "#40c463" : "#ebedf0"}
-                  />
-                )}
+                rectRender={(props, data) => {
+                  const dateEntry = value.find(
+                    (entry) => entry.date === data.date
+                  );
+                  const count = dateEntry ? dateEntry.count : 0;
+                  return (
+                    <rect
+                      {...props}
+                      data-date={data.date}
+                      fill={count ? getColor(count) : "#ebedf0"}
+                    />
+                  );
+                }}
               />
             </div>
           </TooltipTrigger>
@@ -105,5 +104,13 @@ const GithubStyleHeatmap = () => {
     </div>
   );
 };
+
+function getColor(count: number) {
+  if (count === 0) return "#ebedf0";
+  if (count < 5) return "#9be9a8";
+  if (count < 10) return "#40c463";
+  if (count < 20) return "#30a14e";
+  return "#216e39";
+}
 
 export default GithubStyleHeatmap;

@@ -77,7 +77,7 @@ export default function Component() {
       <div className="flex-1 space-y-4">
         <Card className="">
           <CardContent
-            className="bg-red-100  flex-col md:flex md:flex-row justify-between   
+            className="  flex-col md:flex md:flex-row justify-between   
            gap-4 p-2"
           >
             <Charts></Charts>
