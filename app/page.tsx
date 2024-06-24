@@ -5,9 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { ResponsiveHeatMap } from "@nivo/heatmap";
-import Charts from "./[components]/Charts";
+import Charts from "./[components]/PieChart";
 import Rating from "./[components]/Rating";
 import HeatmapSubmission from "./[components]/HeatMap";
+import { Suspense } from "react";
+import PieChart from "./[components]/PieChart";
 
 export default function Component() {
   return (
@@ -80,16 +82,20 @@ export default function Component() {
             className="  flex-col md:flex md:flex-row justify-between   
            gap-4 p-2"
           >
-            <Charts></Charts>
-            <Rating></Rating>
+            <PieChart></PieChart>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Rating></Rating>
+            </Suspense>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="">
-            <HeatmapSubmission></HeatmapSubmission>
-            <h3 className="text-lg font-bold">
+            <h3 className="text-base pt-4 font-semibold">
               25 submissions in the past one year
             </h3>
+            <Suspense fallback={<div>Loading...</div>}>
+              <HeatmapSubmission></HeatmapSubmission>
+            </Suspense>
           </CardContent>
         </Card>
         <Card>

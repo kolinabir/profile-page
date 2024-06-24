@@ -13,10 +13,10 @@ const Rating = () => {
   return (
     <div className="w-full grid gap-3">
       <Card className="w-full">
-        <Card className="rounded-t-md h-[50%] rounded-b-none ">
+        <Card className="rounded-t-md h-[70%] rounded-b-none ">
           <LineChartRating></LineChartRating>
         </Card>
-        <Card className="rounded-t-md h-[50%] rounded-b-none ">
+        <Card className="rounded-t-md h-[30%] rounded-b-none ">
           <CardHeader>
             <CardTitle>Earned Badges</CardTitle>
           </CardHeader>
