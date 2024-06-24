@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,6 +16,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -29,6 +37,9 @@ const formSchema = z.object({
   linkedin: z.string().optional(),
   twitter: z.string().optional(),
   facebook: z.string().optional(),
+  work: z.string().optional(),
+  education: z.string().optional(),
+  skills: z.string().optional(),
 });
 
 const ProfileEditForm = () => {
@@ -47,6 +58,9 @@ const ProfileEditForm = () => {
       linkedin: "https://linkedin.com",
       twitter: "https://twitter.com",
       facebook: "https://facebook.com",
+      work: "Software Engineer",
+      education: "BSc in CSE",
+      skills: "React, Node.js, TypeScript",
     },
   });
 
@@ -59,7 +73,7 @@ const ProfileEditForm = () => {
     <div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 ">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mx-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4  shadow p-3 rounded-md">
             <FormField
               control={form.control}
               name="username"
@@ -88,11 +102,24 @@ const ProfileEditForm = () => {
                 <FormItem>
                   <FormLabel>Gender</FormLabel>
                   <FormControl>
-                    <Input
-                      disabled={!editOpen}
-                      placeholder="shadcn"
-                      className="placeholder:font-bold placeholder:text-gray-700"
-                      {...field}
+                    <Controller
+                      name="gender"
+                      control={form.control}
+                      render={({ field }) => (
+                        <Select
+                          disabled={!editOpen}
+                          onValueChange={field.onChange}
+                          value={field.value || ""}
+                        >
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select gender" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Male">Male</SelectItem>
+                            <SelectItem value="Female">Female</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      )}
                     />
                   </FormControl>
                   <FormMessage />
@@ -244,6 +271,65 @@ const ProfileEditForm = () => {
               )}
             />
           </div>
+          <div className="grid grid-cols-1 gap-4  shadow p-3 rounded-md">
+            <FormField
+              control={form.control}
+              name="work"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Work</FormLabel>
+                  <FormControl>
+                    <Input
+                      disabled={!editOpen}
+                      placeholder="Write about your work experience"
+                      className="placeholder:font-bold placeholder:text-gray-700"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    This is your public display name.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="education"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Educations</FormLabel>
+                  <FormControl>
+                    <Input
+                      disabled={!editOpen}
+                      placeholder="Write about your current education"
+                      className="placeholder:font-bold placeholder:text-gray-700"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="skills"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Skill</FormLabel>
+                  <FormControl>
+                    <Input
+                      disabled={!editOpen}
+                      placeholder="Write about your skills"
+                      className="placeholder:font-bold placeholder:text-gray-700"
+                      {...field}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </div>
+
           {editOpen ? (
             <div className="flex gap-3">
               <Button onClick={() => setEditOpen(false)}>Cancel</Button>
