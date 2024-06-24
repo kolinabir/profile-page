@@ -12,13 +12,13 @@ import LineChartRating from "./LineChartRating";
 const Rating = () => {
   return (
     <div className="w-full grid gap-3">
-      <Card className="w-full">
-        <Card className="rounded-t-md h-[70%] rounded-b-none ">
+      <Card className="w-full shadow-none border-none pb-2">
+        <Card className="rounded-md h-[75%] rounded-b-none ">
           <LineChartRating></LineChartRating>
         </Card>
-        <Card className="rounded-t-md h-[30%] rounded-b-none ">
-          <CardHeader>
-            <CardTitle>Earned Badges</CardTitle>
+        <Card className="rounded-md  h-[25%] rounded-b-none  mt-2">
+          <CardHeader className="p-2">
+            <CardTitle className="text-base">Earned Badges</CardTitle>
           </CardHeader>
           <CardContent className="flex justify-between">
             <div className="text-center text-sm font-semibold ">

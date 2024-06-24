@@ -6,3 +6,4 @@ packages used
 - radix-ui
 - npm install --save react-apexcharts apexcharts
 - npm install apexcharts --save
+- npm install recharts

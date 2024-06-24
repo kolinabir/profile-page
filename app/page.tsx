@@ -10,6 +10,7 @@ import Rating from "./[components]/Rating";
 import HeatmapSubmission from "./[components]/HeatMap";
 import { Suspense } from "react";
 import PieChart from "./[components]/PieChart";
+import Link from "next/link";
 
 export default function Component() {
   return (
@@ -26,7 +27,12 @@ export default function Component() {
           <h2 className="text-xl font-bold">@abirkolin</h2>
           <p className="text-gray-500">Rank 2,897,052</p>
           <Button className="mt-4" variant="outline">
-            Edit Profile
+            <Link
+              href="/dashboard
+            "
+            >
+              Basic Info
+            </Link>
           </Button>
         </CardContent>
         <CardContent>
@@ -100,14 +106,22 @@ export default function Component() {
         </Card>
         <Card>
           <Tabs defaultValue="recent">
-            <TabsList>
-              <TabsTrigger value="recent">Recent AC</TabsTrigger>
-              <TabsTrigger value="list">List</TabsTrigger>
-              <TabsTrigger value="solutions">Solutions</TabsTrigger>
-              <TabsTrigger value="discuss">Discuss</TabsTrigger>
+            <TabsList className="w-full">
+              <TabsTrigger className="w-full" value="recent">
+                Recent Submissions
+              </TabsTrigger>
+              <TabsTrigger className="w-full" value="solutions">
+                Solutions
+              </TabsTrigger>
+              <TabsTrigger className="w-full" value="list">
+                List
+              </TabsTrigger>
+              <TabsTrigger className="w-full" value="discuss">
+                Discuss
+              </TabsTrigger>
             </TabsList>
             <TabsContent value="recent">
-              <ul className="space-y-2">
+              <ul className="space-y-2 px-4">
                 <li className="flex justify-between">
                   <span>Divisor Game</span>
                   <span className="text-gray-500">8 months ago</span>
