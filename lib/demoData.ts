@@ -1,0 +1,80 @@
+export const demoData = {
+  data: {
+    stats: {
+      problemsSolved: {
+        easy: 30,
+        medium: 10,
+        hard: 20,
+      },
+      totalSubmissions: 20,
+      contestRank: 0,
+      rating: 0,
+      acceptanceRate: 0,
+    },
+    _id: "6677a9e52082afa42a3bd585",
+    firstName: "Johnys",
+    lastName: "Doe",
+    userName: "user_tests",
+    email: "test-user@gmail.com",
+    role: "user",
+    image: "https://api.dicebear.com/5.x/adventurer/svg",
+    createdAt: "2024-06-23T04:51:49.653Z",
+    updatedAt: "2024-06-23T12:16:26.485Z",
+    __v: 0,
+    bio: "Updated bio information",
+    birthDate: "1990-01-01T00:00:00.000Z",
+    education: [
+      {
+        school: "University of ABC",
+        degree: "Bachelor of Science",
+        fieldOfStudy: "Computer Science",
+        startDate: "2010-09-01T00:00:00.000Z",
+        endDate: "2014-06-30T00:00:00.000Z",
+        description: "Graduated with honors.",
+        _id: "6678121a4c5a12356c9d7a15",
+      },
+
+      {
+        school: "University of XYZ",
+        degree: "Master of Science",
+        fieldOfStudy: "Computer Science",
+        startDate: "2014-09-01T00:00:00.000Z",
+        description: "Graduated with honors.",
+        _id: "6678121a4c5a12356c9d7a19",
+      },
+    ],
+    gender: "male",
+    location: "New York",
+    skills: ["JavaScript", "React", "Node.js"],
+    socialLinks: {
+      github: "https://github.com/johndoe",
+      linkedin: "https://www.linkedin.com/in/johndoe",
+      twitter: "https://twitter.com/johndoe",
+      _id: "6678121a4c5a12356c9d7a18",
+    },
+    workExperiences: [
+      {
+        company: "ABC Inc.",
+        position: "Senior Developer",
+        startDate: "2015-01-01T00:00:00.000Z",
+        endDate: "2020-12-31T00:00:00.000Z",
+        description: "Lead a team of developers.",
+        _id: "6678121a4c5a12356c9d7a16",
+      },
+      {
+        company: "XYZ Corp.",
+        position: "Software Engineer",
+        startDate: "2021-01-01T00:00:00.000Z",
+        description: "Working on cutting-edge technologies.",
+        _id: "6678121a4c5a12356c9d7a17",
+      },
+    ],
+    badges: [],
+  },
+  message: "login",
+  tokenData: {
+    expiresIn: 604800,
+    token:
+      "eyJhbGciOiJIUz1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Njc3YTllNTIwODJhZmE0MmEzYmQ1ODUiLCJpYXQiOjE3MTkyMzA5MDgsImV4cCI6MTcxOTgzNTcwOH0.8kTNgBOcZ7w_HZRGlB8Pr1wsWGQ-wThDg43tqeoGO6A",
+  },
+};

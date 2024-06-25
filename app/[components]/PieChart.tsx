@@ -167,6 +167,15 @@ class PieChart extends React.Component<
             Total Submissions:{" "}
             {this.chartData.reduce((sum, item) => sum + item.solved, 0)}
           </div>
+          <div className="text-gray-500 dark:text-gray-400 text-sm">
+            Acceptance Rate:{" "}
+            {Math.round(
+              (this.chartData.reduce((sum, item) => sum + item.solved, 0) /
+                this.chartData.reduce((sum, item) => sum + item.total, 0)) *
+                100
+            )}
+            %
+          </div>
         </div>
       </div>
     );

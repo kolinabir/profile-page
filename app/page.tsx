@@ -4,8 +4,6 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { ResponsiveHeatMap } from "@nivo/heatmap";
-import Charts from "./[components]/PieChart";
 import Rating from "./[components]/Rating";
 import HeatmapSubmission from "./[components]/HeatMap";
 import { Suspense } from "react";
