@@ -24,13 +24,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { demoData } from "@/lib/demoData";
-import { Plus, X } from "lucide-react";
+import { MinusCircle, Plus, PlusCircle, X } from "lucide-react";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -101,20 +102,20 @@ const ProfileEditForm = () => {
   });
 
   const {
-    fields: workFields,
-    append: workAppend,
-    remove: workRemove,
-  } = useFieldArray({
-    control: form.control,
-    name: "work",
-  });
-  const {
     fields: skillFields,
     append: skillAppend,
     remove: skillRemove,
   } = useFieldArray({
     control: form.control,
     name: "skills",
+  });
+  const {
+    fields: workFields,
+    append: workAppend,
+    remove: workRemove,
+  } = useFieldArray({
+    control: form.control,
+    name: "work",
   });
   function onSubmit(values: z.infer<typeof formSchema>) {
     setFormData(values);
@@ -259,12 +260,7 @@ const ProfileEditForm = () => {
                 <FormItem>
                   <FormLabel>Birth Date</FormLabel>
                   <FormControl>
-                    <Input
-                      disabled={!editOpen}
-                      placeholder="shadcn"
-                      className="placeholder:font-bold placeholder:text-gray-700"
-                      {...field}
-                    />
+                    <Input disabled={!editOpen} type="date" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -379,322 +375,312 @@ const ProfileEditForm = () => {
               )}
             />
           </div>
-          <div className="grid grid-cols-1 gap-4  shadow p-3 rounded-md">
-            <div className="my-2 p-2 ">
-              <div className="font-bold text-base my-2 ">Work Experience</div>
-              <div className="space-y-3">
-                {workFields.map((field, index) => (
-                  <div className="shadow-md p-3 space-y-2">
-                    <div
-                      key={field.company}
-                      className="space-y-4 grid grid-cols-2 gap-5  rounded-md"
-                    >
-                      <FormField
-                        control={form.control}
-                        name={`work.${index}.company`}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Company</FormLabel>
-                            <FormControl>
-                              <Input
-                                disabled={!editOpen}
-                                placeholder="Write about your company"
-                                className="placeholder:font-bold placeholder:text-gray-700"
-                                {...field}
-                              />
-                            </FormControl>
-                          </FormItem>
+          <h2 className="text-xl font-bold">Work Experience</h2>
+          {workFields.map((field, index) => (
+            <Card key={field.id} className="mb-4 p-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <FormField
+                  control={form.control}
+                  name={`work.${index}.company`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Company</FormLabel>
+                      <FormControl>
+                        <Input
+                          disabled={!editOpen}
+                          placeholder="Company name"
+                          {...field}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name={`work.${index}.position`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Position</FormLabel>
+                      <FormControl>
+                        <Input
+                          disabled={!editOpen}
+                          placeholder="Job title"
+                          {...field}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name={`work.${index}.startDate`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Start Date</FormLabel>
+                      <FormControl>
+                        {editOpen ? (
+                          <Input disabled={!editOpen} type="date" {...field} />
+                        ) : (
+                          <Input disabled={!editOpen} type="text" {...field} />
                         )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name={`work.${index}.position`}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Position</FormLabel>
-                            <FormControl>
-                              <Input
-                                disabled={!editOpen}
-                                placeholder="Write about your position"
-                                className="placeholder:font-bold placeholder:text-gray-700"
-                                {...field}
-                              />
-                            </FormControl>
-                          </FormItem>
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name={`work.${index}.endDate`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>End Date</FormLabel>
+                      <FormControl>
+                        {editOpen ? (
+                          <Input disabled={!editOpen} type="date" {...field} />
+                        ) : (
+                          <Input disabled={!editOpen} type="text" {...field} />
                         )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name={`work.${index}.startDate`}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Start Date</FormLabel>
-                            <FormControl>
-                              <Input
-                                disabled={!editOpen}
-                                placeholder="Write about your start date"
-                                className="placeholder:font-bold placeholder:text-gray-700"
-                                {...field}
-                              />
-                            </FormControl>
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name={`education.${index}.endDate`}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>End Date</FormLabel>
-                            <FormControl>
-                              <Input
-                                disabled={!editOpen}
-                                placeholder="Write about your end date"
-                                className="placeholder:font-bold placeholder:text-gray-700"
-                                {...field}
-                              />
-                            </FormControl>
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name={`education.${index}.description`}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Description</FormLabel>
-                            <FormControl>
-                              <Input
-                                disabled={!editOpen}
-                                placeholder="Job description"
-                                className="placeholder:font-bold placeholder:text-gray-700"
-                                {...field}
-                              />
-                            </FormControl>
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-
-                    <Button
-                      className={editOpen ? "block w-[50%]" : "hidden "}
-                      type="button"
-                      onClick={() => workRemove(index)}
-                      disabled={!editOpen}
-                    >
-                      Remove Work
-                    </Button>
-                  </div>
-                ))}
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
               </div>
-              <Button
-                className={editOpen ? "block" : "hidden"}
-                type="button"
-                onClick={() =>
-                  workAppend({
-                    company: "",
-                    position: "",
-                    startDate: "",
-                    endDate: "",
-                    description: "",
-                  })
-                }
-                disabled={!editOpen}
-              >
-                Add Work
-              </Button>
-            </div>
-            <div className="my-2 p-2 ">
-              <div className="font-bold text-base my-2 ">Education</div>
-              <div className="space-y-3">
-                {fields.map((field, index) => (
-                  <div
-                    key={field.school}
-                    className="space-y-4 grid grid-cols-2 gap-5 shadow-md p-3 rounded-md"
-                  >
-                    <FormField
-                      control={form.control}
-                      name={`education.${index}.school`}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>School</FormLabel>
-                          <FormControl>
-                            <Input
-                              disabled={!editOpen}
-                              placeholder="Write about your school"
-                              className="placeholder:font-bold placeholder:text-gray-700"
-                              {...field}
-                            />
-                          </FormControl>
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name={`education.${index}.degree`}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Degree</FormLabel>
-                          <FormControl>
-                            <Input
-                              disabled={!editOpen}
-                              placeholder="Write about your degree"
-                              className="placeholder:font-bold placeholder:text-gray-700"
-                              {...field}
-                            />
-                          </FormControl>
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name={`education.${index}.fieldOfStudy`}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Field of Study</FormLabel>
-                          <FormControl>
-                            <Input
-                              disabled={!editOpen}
-                              placeholder="Write about your field of study"
-                              className="placeholder:font-bold placeholder:text-gray-700"
-                              {...field}
-                            />
-                          </FormControl>
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name={`education.${index}.startDate`}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Start Date</FormLabel>
-                          <FormControl>
-                            <Input
-                              disabled={!editOpen}
-                              placeholder="Write about your start date"
-                              className="placeholder:font-bold placeholder:text-gray-700"
-                              {...field}
-                            />
-                          </FormControl>
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name={`education.${index}.endDate`}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>End Date</FormLabel>
-                          <FormControl>
-                            <Input
-                              disabled={!editOpen}
-                              placeholder="Write about your end date"
-                              className="placeholder:font-bold placeholder:text-gray-700"
-                              {...field}
-                            />
-                          </FormControl>
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name={`education.${index}.description`}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Description</FormLabel>
-                          <FormControl>
-                            <Input
-                              disabled={!editOpen}
-                              placeholder="Write about your description"
-                              className="placeholder:font-bold placeholder:text-gray-700"
-                              {...field}
-                            />
-                          </FormControl>
-                        </FormItem>
-                      )}
-                    />
-                    <Button
-                      className={editOpen ? "block" : "hidden"}
-                      type="button"
-                      onClick={() => remove(index)}
-                      disabled={!editOpen}
-                    >
-                      Remove Education
-                    </Button>
-                  </div>
-                ))}
-              </div>
-              <Button
-                className={editOpen ? "block" : "hidden"}
-                type="button"
-                onClick={() =>
-                  append({
-                    school: "",
-                    degree: "",
-                    fieldOfStudy: "",
-                    startDate: "",
-                    endDate: "",
-                    description: "",
-                  })
-                }
-                disabled={!editOpen}
-              >
-                Add Education
-              </Button>
-            </div>
-            <Card className="w-full  mx-auto">
-              <CardHeader>
-                <h3 className="text-xl font-semibold">Your Skills</h3>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                  {skillFields.map((field, index) => (
-                    <FormField
-                      key={field.id}
-                      control={form.control}
-                      name={`skills.${index}`}
-                      render={({ field }) => (
-                        <FormItem className="relative">
-                          <FormControl>
-                            <Input
-                              disabled={!editOpen}
-                              placeholder="Enter a skill"
-                              className="w-full pr-8 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500"
-                              {...field}
-                            />
-                          </FormControl>
-                          {editOpen && (
-                            <Button
-                              type="button"
-                              onClick={() => skillRemove(index)}
-                              disabled={!editOpen}
-                              className="absolute right-1 top-1/2 -translate-y-1/2 p-1 h-auto text-gray-400 hover:text-red-500 transition-colors"
-                              variant="ghost"
-                            >
-                              <X size={16} />
-                            </Button>
-                          )}
-                        </FormItem>
-                      )}
-                    />
-                  ))}
-                </div>
-              </CardContent>
+              <FormField
+                control={form.control}
+                name={`work.${index}.description`}
+                render={({ field }) => (
+                  <FormItem className="mt-4">
+                    <FormLabel>Description</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        disabled={!editOpen}
+                        placeholder="Job description and responsibilities"
+                        className="h-24"
+                        {...field}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
               {editOpen && (
-                <CardFooter>
-                  <Button
-                    type="button"
-                    onClick={() => skillAppend("")}
-                    className="w-full sm:w-auto mt-4 bg-blue-500 hover:bg-blue-600 text-white"
-                  >
-                    <Plus size={16} className="mr-2" />
-                    Add Skill
-                  </Button>
-                </CardFooter>
+                <Button
+                  type="button"
+                  variant="destructive"
+                  size="sm"
+                  className="mt-4"
+                  onClick={() => workRemove(index)}
+                >
+                  <MinusCircle className="mr-2 h-4 w-4" />
+                  Remove Work Experience
+                </Button>
               )}
             </Card>
-          </div>
+          ))}
+          {editOpen && (
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() =>
+                workAppend({
+                  company: "",
+                  position: "",
+                  startDate: "",
+                  endDate: "",
+                  description: "",
+                })
+              }
+            >
+              <PlusCircle className="mr-2 h-4 w-4" />
+              Add Work Experience
+            </Button>
+          )}
+
+          <h2 className="text-xl font-bold">Education</h2>
+
+          {fields.map((field, index) => (
+            <Card key={field.id} className="mb-4 p-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <FormField
+                  control={form.control}
+                  name={`education.${index}.school`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>School</FormLabel>
+                      <FormControl>
+                        <Input
+                          disabled={!editOpen}
+                          placeholder="School or institution name"
+                          {...field}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name={`education.${index}.degree`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Degree</FormLabel>
+                      <FormControl>
+                        <Input
+                          disabled={!editOpen}
+                          placeholder="Degree obtained"
+                          {...field}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name={`education.${index}.fieldOfStudy`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Field of Study</FormLabel>
+                      <FormControl>
+                        <Input
+                          disabled={!editOpen}
+                          placeholder="Major or specialization"
+                          {...field}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name={`education.${index}.startDate`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Start Date</FormLabel>
+                      <FormControl>
+                        {editOpen ? (
+                          <Input disabled={!editOpen} type="date" {...field} />
+                        ) : (
+                          <Input disabled={!editOpen} type="text" {...field} />
+                        )}
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name={`education.${index}.endDate`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>End Date</FormLabel>
+                      <FormControl>
+                        {editOpen ? (
+                          <Input disabled={!editOpen} type="date" {...field} />
+                        ) : (
+                          <Input disabled={!editOpen} type="text" {...field} />
+                        )}
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <FormField
+                control={form.control}
+                name={`education.${index}.description`}
+                render={({ field }) => (
+                  <FormItem className="mt-4">
+                    <FormLabel>Description</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        disabled={!editOpen}
+                        placeholder="Achievements, activities, or other relevant information"
+                        className="h-24"
+                        {...field}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              {editOpen && (
+                <Button
+                  type="button"
+                  variant="destructive"
+                  size="sm"
+                  className="mt-4"
+                  onClick={() => remove(index)}
+                >
+                  <MinusCircle className="mr-2 h-4 w-4" />
+                  Remove Education
+                </Button>
+              )}
+            </Card>
+          ))}
+          {editOpen && (
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() =>
+                append({
+                  school: "",
+                  degree: "",
+                  fieldOfStudy: "",
+                  startDate: "",
+                  endDate: "",
+                  description: "",
+                })
+              }
+            >
+              <PlusCircle className="mr-2 h-4 w-4" />
+              Add Education
+            </Button>
+          )}
+          <Card className="w-full  mx-auto">
+            <CardHeader>
+              <h3 className="text-xl font-semibold">Your Skills</h3>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {skillFields.map((field, index) => (
+                  <FormField
+                    key={field.id}
+                    control={form.control}
+                    name={`skills.${index}`}
+                    render={({ field }) => (
+                      <FormItem className="relative">
+                        <FormControl>
+                          <Input
+                            disabled={!editOpen}
+                            placeholder="Enter a skill"
+                            className="w-full pr-8 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500"
+                            {...field}
+                          />
+                        </FormControl>
+                        {editOpen && (
+                          <Button
+                            type="button"
+                            onClick={() => skillRemove(index)}
+                            disabled={!editOpen}
+                            className="absolute right-1 top-1/2 -translate-y-1/2 p-1 h-auto text-gray-400 hover:text-red-500 transition-colors"
+                            variant="ghost"
+                          >
+                            <X size={16} />
+                          </Button>
+                        )}
+                      </FormItem>
+                    )}
+                  />
+                ))}
+              </div>
+            </CardContent>
+            {editOpen && (
+              <CardFooter>
+                <Button
+                  type="button"
+                  onClick={() => skillAppend("")}
+                  className="w-full sm:w-auto mt-4 bg-blue-500 hover:bg-blue-600 text-white"
+                >
+                  <Plus size={16} className="mr-2" />
+                  Add Skill
+                </Button>
+              </CardFooter>
+            )}
+          </Card>
 
           {editOpen ? (
             <div className="flex gap-3">
