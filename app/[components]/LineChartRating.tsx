@@ -10,6 +10,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const data = [
   {
@@ -65,10 +66,11 @@ const performanceData = [
 ];
 
 const LineChartRating: React.FC = () => {
+  const [isRating, setIsRating] = React.useState(true);
   return (
     <div className="w-full h-80 bg-white p-4">
-      <div className="text-lg font-semibold mb-2">Contest Performance</div>
-      <div className="grid grid-cols-3 gap-4 mb-4">
+      <div className="text-lg font-semibold mb-1">Contest Performance</div>
+      <div className="grid grid-cols-3 gap-2 mb-2">
         {performanceData.map(({ label, value, isBadge }) => (
           <div key={label} className="flex flex-col">
             <p className="text-xs text-gray-500">{label}</p>
@@ -83,6 +85,26 @@ const LineChartRating: React.FC = () => {
             )}
           </div>
         ))}
+      </div>
+      <div className="w-full mb-2">
+        <Tabs defaultValue="rating" className="w-full">
+          <TabsList className="w-full flex justify-between">
+            <TabsTrigger
+              className="mx-auto w-full text-center"
+              onClick={() => setIsRating(true)}
+              value="rating"
+            >
+              Rating
+            </TabsTrigger>
+            <TabsTrigger
+              className="mx-auto w-full text-center"
+              onClick={() => setIsRating(false)}
+              value="CampaignRating"
+            >
+              Campaign Rating
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
       </div>
       <ResponsiveContainer className="" width="100%" height="60%">
         <LineChart
@@ -107,20 +129,15 @@ const LineChartRating: React.FC = () => {
             domain={[0, "dataMax + 1"]}
           />
           <Tooltip />
-          <Legend />
           <Line
             type="monotone"
-            dataKey="campaignRating"
-            stroke="#2196F3"
-            strokeWidth={2}
-            dot={false}
-          />
-          <Line
-            type="monotone"
-            dataKey="rating"
+            dataKey={isRating ? "rating" : "campaignRating"}
             stroke="#4CAF50"
             strokeWidth={2}
             dot={false}
+            isAnimationActive={true}
+            animationDuration={300}
+            animationEasing="ease-in-out"
           />
         </LineChart>
       </ResponsiveContainer>

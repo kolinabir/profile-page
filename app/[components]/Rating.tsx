@@ -13,12 +13,12 @@ const Rating = () => {
   return (
     <div className="w-full grid gap-3">
       <Card className="w-full shadow-none border-none pb-2">
-        <Card className="rounded-md h-[75%] rounded-b-none ">
+        <Card className="rounded-md h-[78%]  ">
           <LineChartRating></LineChartRating>
         </Card>
-        <Card className="rounded-md  h-[25%] rounded-b-none  mt-2">
+        <Card className="rounded-md  h-[22%]   mt-2">
           <CardHeader className="p-2">
-            <CardTitle className="text-base">Earned Badges</CardTitle>
+            <CardTitle className="text-sm text-center">Earned Badges</CardTitle>
           </CardHeader>
           <CardContent className="flex justify-between">
             <div className="text-center text-sm font-semibold ">
@@ -29,10 +29,10 @@ const Rating = () => {
                   "https://cdn-icons-png.flaticon.com/128/11851/11851561.png"
                 }
                 alt="badge"
-                width={50}
-                height={50}
+                width={40}
+                height={40}
               />
-              <div>
+              <div className="text-sm">
                 <h4>Solution Seeker</h4>
               </div>
             </div>
@@ -42,8 +42,8 @@ const Rating = () => {
                 className="mx-auto"
                 src={"https://cdn-icons-png.flaticon.com/128/1147/1147830.png"}
                 alt="badge"
-                width={50}
-                height={50}
+                width={40}
+                height={40}
               />
               <div>
                 <h4>Brainstormer</h4>
@@ -55,8 +55,8 @@ const Rating = () => {
                 className="mx-auto"
                 src={"https://cdn-icons-png.flaticon.com/128/5611/5611117.png"}
                 alt="badge"
-                width={50}
-                height={50}
+                width={40}
+                height={40}
               />
               <div>
                 <h4>Puzzle Master</h4>

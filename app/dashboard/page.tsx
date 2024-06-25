@@ -1,11 +1,37 @@
+"use client";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import ProfileEditForm from "../[components]/ProfileEditForm";
+import { Menu } from "lucide-react";
 
 const ProfilePage = () => {
+  const [sidebarVisible, setSidebarVisible] = useState(false);
+
+  const toggleSidebar = () => {
+    setSidebarVisible(!sidebarVisible);
+  };
+
   return (
-    <div className="flex flex-col lg:flex-row gap-4 md:mx-36 mt-5 ">
-      <aside className="flex   flex-col w-64 h-screen px-4 py-8 overflow-y-auto bg-white border rounded-md dark:bg-gray-900 dark:border-gray-700 ">
+    <div className="relative flex flex-col lg:flex-row gap-4 md:mx-36 mt-5">
+      {/* Toggle button for mobile */}
+      <button
+        onClick={toggleSidebar}
+        className="lg:hidden fixed top-4 left-4 z-20 bg-gray-200 p-2 rounded-md"
+        aria-label="Toggle sidebar"
+      >
+        <Menu size={24} />
+      </button>
+
+      {/* Sidebar */}
+      <aside
+        className={`
+          flex flex-col w-64  h-screen px-4 py-8 overflow-y-auto bg-white border rounded-md
+          dark:bg-gray-900 dark:border-gray-700
+          lg:relative lg:translate-x-0 transition-transform duration-300 ease-in-out
+          fixed inset-y-0 left-0 z-10 transform
+          ${sidebarVisible ? "translate-x-0" : "-translate-x-full"}
+        `}
+      >
         <a href="#" className="mx-auto">
           <Image
             src="https://supecoder.dev/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fsupe-logo.283b4cd0.png&w=640&q=75"
@@ -60,9 +86,22 @@ const ProfilePage = () => {
           </nav>
         </div>
       </aside>
-      <div className="w-full">
-        <ProfileEditForm></ProfileEditForm>
-      </div>
+
+      {/* Main content */}
+      <main
+        className={`flex-1  p-8 ${
+          sidebarVisible ? "blur-sm lg:blur-none" : ""
+        }`}
+      >
+        <div className="max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+          <div className="p-6">
+            <h2 className="text-2xl font-semibold text-gray-800 dark:text-white mb-6">
+              Edit Profile
+            </h2>
+            <ProfileEditForm />
+          </div>
+        </div>
+      </main>
     </div>
   );
 };

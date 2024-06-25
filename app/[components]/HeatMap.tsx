@@ -21,6 +21,8 @@ const value = [
 const GithubStyleHeatmap = () => {
   const [tooltipContent, setTooltipContent] = useState("");
 
+  //make the width responsive
+
   const handleCellMouseEnter = (date: string) => {
     const formattedDate = new Date(date).toLocaleDateString("en-US", {
       year: "numeric",
@@ -39,7 +41,7 @@ const GithubStyleHeatmap = () => {
   };
 
   return (
-    <div className="mt-3">
+    <div className="mt-3 overflow-x-auto">
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
