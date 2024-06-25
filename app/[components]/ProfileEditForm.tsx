@@ -68,12 +68,15 @@ const formSchema = z.object({
       description: z.string().optional(),
     })
   ),
-  skills: z.array(z.string()).optional(),
+  skills: z.string().optional(),
 });
 
 const ProfileEditForm = () => {
   const [formData, setFormData] = useState({});
   const [editOpen, setEditOpen] = useState(false);
+
+  const [skills, setSkills] = useState<string[]>(demoData.data.skills || []);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -92,27 +95,23 @@ const ProfileEditForm = () => {
       facebook: "https://facebook.com",
       work: demoData.data.workExperiences,
       education: demoData.data.education,
-      skills: demoData.data.skills,
+      skills: "",
     },
   });
 
-  const { fields, append, remove } = useFieldArray({
+  const {
+    fields: educationFields,
+    append: appendEducation,
+    remove: removeEducation,
+  } = useFieldArray({
     control: form.control,
     name: "education",
   });
 
   const {
-    fields: skillFields,
-    append: skillAppend,
-    remove: skillRemove,
-  } = useFieldArray({
-    control: form.control,
-    name: "skills",
-  });
-  const {
     fields: workFields,
-    append: workAppend,
-    remove: workRemove,
+    append: appendWork,
+    remove: removeWork,
   } = useFieldArray({
     control: form.control,
     name: "work",
@@ -121,6 +120,16 @@ const ProfileEditForm = () => {
     setFormData(values);
     console.log(values);
   }
+  const addSkill = (skill: any) => {
+    if (skill && !skills.includes(skill)) {
+      setSkills([...skills, skill]);
+      form.setValue("skills", "");
+    }
+  };
+
+  const removeSkill = (skillToRemove: string) => {
+    setSkills(skills.filter((skill) => skill !== skillToRemove));
+  };
 
   return (
     <div>
@@ -467,7 +476,7 @@ const ProfileEditForm = () => {
                   variant="destructive"
                   size="sm"
                   className="mt-4"
-                  onClick={() => workRemove(index)}
+                  onClick={() => removeWork(index)}
                 >
                   <MinusCircle className="mr-2 h-4 w-4" />
                   Remove Work Experience
@@ -480,7 +489,7 @@ const ProfileEditForm = () => {
               type="button"
               variant="outline"
               onClick={() =>
-                workAppend({
+                appendWork({
                   company: "",
                   position: "",
                   startDate: "",
@@ -496,7 +505,7 @@ const ProfileEditForm = () => {
 
           <h2 className="text-xl font-bold">Education</h2>
 
-          {fields.map((field, index) => (
+          {educationFields.map((field, index) => (
             <Card key={field.id} className="mb-4 p-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormField
@@ -603,7 +612,7 @@ const ProfileEditForm = () => {
                   variant="destructive"
                   size="sm"
                   className="mt-4"
-                  onClick={() => remove(index)}
+                  onClick={() => removeEducation(index)}
                 >
                   <MinusCircle className="mr-2 h-4 w-4" />
                   Remove Education
@@ -616,7 +625,7 @@ const ProfileEditForm = () => {
               type="button"
               variant="outline"
               onClick={() =>
-                append({
+                appendEducation({
                   school: "",
                   degree: "",
                   fieldOfStudy: "",
@@ -630,56 +639,58 @@ const ProfileEditForm = () => {
               Add Education
             </Button>
           )}
-          <Card className="w-full  mx-auto">
+          <Card className="w-full mx-auto">
             <CardHeader>
               <h3 className="text-xl font-semibold">Your Skills</h3>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {skillFields.map((field, index) => (
-                  <FormField
-                    key={field.id}
-                    control={form.control}
-                    name={`skills.${index}`}
-                    render={({ field }) => (
-                      <FormItem className="relative">
-                        <FormControl>
-                          <Input
-                            disabled={!editOpen}
-                            placeholder="Enter a skill"
-                            className="w-full pr-8 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500"
-                            {...field}
-                          />
-                        </FormControl>
-                        {editOpen && (
-                          <Button
-                            type="button"
-                            onClick={() => skillRemove(index)}
-                            disabled={!editOpen}
-                            className="absolute right-1 top-1/2 -translate-y-1/2 p-1 h-auto text-gray-400 hover:text-red-500 transition-colors"
-                            variant="ghost"
-                          >
-                            <X size={16} />
-                          </Button>
-                        )}
-                      </FormItem>
+                {skills.map((skill, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center justify-between bg-gray-100 p-2 rounded"
+                  >
+                    <span>{skill}</span>
+                    {editOpen && (
+                      <Button
+                        type="button"
+                        onClick={() => removeSkill(skill)}
+                        className="p-1 h-auto text-gray-400 hover:text-red-500 transition-colors"
+                        variant="ghost"
+                      >
+                        <X size={16} />
+                      </Button>
                     )}
-                  />
+                  </div>
                 ))}
               </div>
+              {editOpen && (
+                <FormField
+                  control={form.control}
+                  name="skills"
+                  render={({ field }) => (
+                    <FormItem className="mt-4">
+                      <FormControl>
+                        <div className="flex">
+                          <Input
+                            placeholder="Enter a skill"
+                            className="w-full"
+                            {...field}
+                          />
+                          <Button
+                            type="button"
+                            onClick={() => addSkill(field.value as string)}
+                            className="ml-2 bg-blue-500 hover:bg-blue-600 text-white"
+                          >
+                            <Plus size={16} />
+                          </Button>
+                        </div>
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              )}
             </CardContent>
-            {editOpen && (
-              <CardFooter>
-                <Button
-                  type="button"
-                  onClick={() => skillAppend("")}
-                  className="w-full sm:w-auto mt-4 bg-blue-500 hover:bg-blue-600 text-white"
-                >
-                  <Plus size={16} className="mr-2" />
-                  Add Skill
-                </Button>
-              </CardFooter>
-            )}
           </Card>
 
           {editOpen ? (
